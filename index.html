@@ -4,242 +4,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCATEC Game Jam | Mañana</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Orden Familiar Final</title>
     <style>
-        :root {
-            --color1: #ff6fc4; /* Rosa */
-            --color2: #ffa276; /* Naranja */
-            --color3: #ffee69; /* Amarillo */
-            --color4: #fbffad; /* Crema */
-            --color5: #b4fff7; /* Celeste */
-            --dark: #1a1a1a;
-        }
+        :root { --primary: #2e7d32; --secondary: #1565c0; --accent: #d32f2f; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #eef2f3; padding: 10px; margin: 0; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 15px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h2, h3 { text-align: center; color: var(--primary); margin-bottom: 10px; }
+        
+        .setup-section { background: #f1f8e9; padding: 10px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #c8e6c9; }
+        .config-row { display: flex; gap: 5px; margin-bottom: 8px; }
+        .config-row input { flex-grow: 1; margin-bottom: 0; }
+        .config-row button { width: auto; padding: 5px 15px; margin-bottom: 0; background: #4caf50; color: white; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        label { display: block; margin-bottom: 3px; font-weight: bold; font-size: 0.85em; color: #555; }
+        select, input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 16px; }
+        
+        button { width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .btn-order { background: var(--primary); color: white; font-size: 1.1em; margin-bottom: 10px; }
+        .btn-summary { background: var(--secondary); color: white; }
+        .btn-reset { background: #9e9e9e; color: white; margin-top: 20px; font-size: 0.9em; }
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--color4);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        /* --- Navegación --- */
-        nav {
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--dark);
-            color: white;
-        }
-
-        .logo {
-            font-weight: 900;
-            font-size: 1.6rem;
-            color: var(--color5);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* --- Hero --- */
-        .hero {
-            padding: 100px 5%;
-            text-align: center;
-            background: var(--color1);
-            background: linear-gradient(135deg, var(--color1), var(--color2));
-            color: var(--dark);
-            border-bottom: 8px solid var(--dark);
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 900;
-            line-height: 0.9;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .hero p {
-            font-size: 1.4rem;
-            font-weight: 600;
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-
-        /* --- Ubicación y Fecha --- */
-        .highlight-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            background: var(--dark);
-            color: white;
-            padding: 20px;
-            gap: 10px;
-        }
-
-        .info-box {
-            padding: 20px;
-            text-align: center;
-            border: 2px solid var(--color5);
-        }
-
-        .info-box h3 {
-            color: var(--color3);
-            font-size: 0.8rem;
-            margin-bottom: 5px;
-        }
-
-        /* --- Agenda --- */
-        .agenda {
-            padding: 80px 5%;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        .agenda h2 {
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 50px;
-            text-decoration: underline var(--color1);
-        }
-
-        .day {
-            background: white;
-            border: 4px solid var(--dark);
-            box-shadow: 12px 12px 0px var(--dark);
-            margin-bottom: 50px;
-            overflow: hidden;
-        }
-
-        .day-title {
-            background: var(--color5);
-            padding: 20px;
-            font-size: 1.8rem;
-            font-weight: 900;
-            border-bottom: 4px solid var(--dark);
-        }
-
-        .event {
-            display: flex;
-            padding: 20px;
-            border-bottom: 2px solid var(--color4);
-            align-items: center;
-        }
-
-        .event:last-child { border-bottom: none; }
-
-        .time {
-            background: var(--color3);
-            padding: 5px 15px;
-            font-weight: 900;
-            border: 2px solid var(--dark);
-            margin-right: 20px;
-            min-width: 110px;
-            text-align: center;
-        }
-
-        .desc {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .ucatec-footer {
-            color: var(--color2);
-            font-weight: 900;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
+        .item { background: #fff; border-left: 5px solid var(--primary); padding: 10px; margin: 8px 0; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: relative; }
+        .item-delete { position: absolute; right: 10px; top: 10px; color: var(--accent); cursor: pointer; font-weight: bold; padding: 5px; }
+        
+        #summary { display: none; background: #fff8e1; border: 2px solid #ffb300; padding: 15px; border-radius: 10px; margin-top: 20px; }
+        .summary-line { padding: 8px 0; border-bottom: 1px solid #ffe082; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">UCATEC GAME JAM</div>
-        <div style="font-weight: bold;">[ 48H CHALLENGE ]</div>
-    </nav>
+<div class="container">
+    <h2>🍴 Pedido Familiar</h2>
 
-    <header class="hero">
-        <h1>CREA EL<br>FUTURO</h1>
-        <p>El evento de desarrollo de videojuegos más esperado llega a UCATEC. ¿Estás listo para el reto?</p>
-    </header>
-
-    <div class="highlight-bar">
-        <div class="info-box">
-            <h3>LUGAR</h3>
-            <p>Campus UCATEC</p>
+    <div class="setup-section">
+        <label>1. Agregar Plato Nuevo:</label>
+        <div class="config-row">
+            <input type="text" id="newDish" placeholder="Ej: Arroz con Fideo Broaster">
+            <button onclick="addItem('menu', 'newDish', 'dishSelect')">+</button>
         </div>
-        <div class="info-box">
-            <h3>INICIO</h3>
-            <p>Mañana, Sáb 27 Dic</p>
-        </div>
-        <div class="info-box">
-            <h3>FIN</h3>
-            <p>Dom 28 Dic</p>
+        
+        <label style="margin-top:10px">2. Agregar Característica Nueva:</label>
+        <div class="config-row">
+            <input type="text" id="newFeature" placeholder="Ej: Sin presa / Solo Ala">
+            <button onclick="addItem('features', 'newFeature', 'featureSelect')">+</button>
         </div>
     </div>
 
-    <section class="agenda">
-        <h2>CRONOGRAMA</h2>
+    <div class="order-section">
+        <label>¿Quién pide?</label>
+        <select id="personSelect"></select>
 
-        <div class="day">
-            <div class="day-title">SÁBADO 27</div>
-            <div class="event">
-                <div class="time">08:30</div>
-                <div class="desc">Registro y Coffee Break de Bienvenida</div>
-            </div>
-            <div class="event">
-                <div class="time">10:00</div>
-                <div class="desc">Presentación del TEMA SECRETO 🚀</div>
-            </div>
-            <div class="event">
-                <div class="time">11:00</div>
-                <div class="desc">Formación de equipos y brainstorming</div>
-            </div>
-            <div class="event" style="background-color: var(--color4);">
-                <div class="time">12:30</div>
-                <div class="desc">¡COMIENZA EL DESARROLLO!</div>
-            </div>
-        </div>
+        <label>Plato:</label>
+        <select id="dishSelect"><option value="">-- Selecciona Plato --</option></select>
 
-        <div class="day">
-            <div class="day-title" style="background-color: var(--color2);">DOMINGO 28</div>
-            <div class="event">
-                <div class="time">10:00</div>
-                <div class="desc">Sesión de Mentoría Especializada</div>
-            </div>
-            <div class="event">
-                <div class="time">16:00</div>
-                <div class="desc">Fecha límite de subida de proyectos</div>
-            </div>
-            <div class="event">
-                <div class="time">17:30</div>
-                <div class="desc">Showcase y Demo Day (Abierto al público)</div>
-            </div>
-            <div class="event" style="background-color: var(--color3);">
-                <div class="time">19:00</div>
-                <div class="desc">Premiación y Clausura</div>
-            </div>
-        </div>
-    </section>
+        <label>Característica:</label>
+        <select id="featureSelect"><option value="Normal">Normal / Estándar</option></select>
 
-    <footer>
-        <div class="ucatec-footer">UCATEC</div>
-        <p>Organizado por la Facultad de Tecnología</p>
-        <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6;">© 2025. Entrada libre previo registro para estudiantes.</p>
-    </footer>
+        <button class="btn-order" onclick="addOrder()">✅ Anotar Pedido</button>
+    </div>
+
+    <div id="orderList"></div>
+
+    <button class="btn-summary" onclick="showSummary()">📊 Resumen para el Mesero</button>
+
+    <div id="summary">
+        <h3 style="color:#f57c00">Lista para el Mesero:</h3>
+        <div id="summaryContent"></div>
+    </div>
+
+    <button class="btn-reset" onclick="confirmReset()">🗑️ Borrar Todo y Empezar de Nuevo</button>
+</div>
+
+<script>
+    const persons = [
+        "Mami Nelia", "nai", "blady", "valentina", "Henry", "Gely", "Ada", "Dayli", 
+        "Antonella", "Geler", "Martha", "Getsemaní", "Guti", "Joaquin", "Kiara", 
+        "Nelber", "Liz", "Elner", "Shanel", "Nelbercito"
+    ];
+
+    let orders = [];
+    let menu = [];
+    let features = ["Normal"];
+
+    // Cargar Personas
+    const pSelect = document.getElementById('personSelect');
+    persons.forEach(p => {
+        let opt = document.createElement('option');
+        opt.value = p; opt.innerText = p;
+        pSelect.appendChild(opt);
+    });
+
+    // Función para agregar items a los combos (Platos o Características)
+    function addItem(type, inputId, selectId) {
+        const input = document.getElementById(inputId);
+        const val = input.value.trim();
+        if(!val) return;
+
+        if(type === 'menu') menu.push(val);
+        else features.push(val);
+
+        updateSelect(selectId, type === 'menu' ? menu : features);
+        input.value = '';
+    }
+
+    function updateSelect(id, data) {
+        const sel = document.getElementById(id);
+        const placeholder = id === 'dishSelect' ? '-- Selecciona Plato --' : 'Normal / Estándar';
+        sel.innerHTML = `<option value="${id === 'featureSelect' ? 'Normal' : ''}">${placeholder}</option>`;
+        data.forEach(item => {
+            if(item === "Normal" && id === 'featureSelect') return;
+            let opt = document.createElement('option');
+            opt.value = item; opt.innerText = item;
+            sel.appendChild(opt);
+        });
+    }
+
+    function addOrder() {
+        const person = document.getElementById('personSelect').value;
+        const dish = document.getElementById('dishSelect').value;
+        const feature = document.getElementById('featureSelect').value;
+
+        if(!dish) { alert("¡Selecciona un plato!"); return; }
+
+        orders.push({ person, dish, feature });
+        renderOrders();
+    }
+
+    function renderOrders() {
+        const list = document.getElementById('orderList');
+        list.innerHTML = '';
+        orders.forEach((o, i) => {
+            list.innerHTML += `
+                <div class="item">
+                    <strong>${o.person}</strong> pidió: <br>
+                    ${o.dish} <small>(${o.feature})</small>
+                    <span class="item-delete" onclick="deleteOrder(${i})">✕</span>
+                </div>`;
+        });
+    }
+
+    function deleteOrder(i) {
+        orders.splice(i, 1);
+        renderOrders();
+    }
+
+    function showSummary() {
+        if(orders.length === 0) return;
+        const content = document.getElementById('summaryContent');
+        const box = document.getElementById('summary');
+        content.innerHTML = '';
+
+        const grouped = {};
+
+        orders.forEach(o => {
+            // Agrupamos por combinación exacta de Plato + Característica
+            const key = `${o.dish.toUpperCase()} [${o.feature}]`;
+            if(!grouped[key]) {
+                grouped[key] = { count: 0, owners: [] };
+            }
+            grouped[key].count++;
+            grouped[key].owners.push(o.person);
+        });
+
+        for(let k in grouped) {
+            content.innerHTML += `
+                <div class="summary-line">
+                    <strong>${grouped[k].count}x ${k}</strong>
+                    <br><small>Para: ${grouped[k].owners.join(', ')}</small>
+                </div>`;
+        }
+        box.style.display = 'block';
+        box.scrollIntoView({behavior: "smooth"});
+    }
+
+    function confirmReset() {
+        if(confirm("¿Seguro que quieres borrar todos los pedidos actuales?")) {
+            orders = [];
+            renderOrders();
+            document.getElementById('summary').style.display = 'none';
+        }
+    }
+</script>
 
 </body>
 </html>
